@@ -8,10 +8,14 @@ def call() {
         stages {
             stage('Maven Build') {
                 steps {
-                    script {
-                        // Maven build
-                        mvn clean validate
-                    }
+                    // Maven build
+                    sh '''
+                        mvn clean verify
+                    '''
+                    // Publish Reports
+                    junit keepLongStdio: true, \
+                        testResults: '**/target/surefire-reports/*.xml'
+                    jacoco()
                 }
             }
         }
