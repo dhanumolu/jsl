@@ -48,7 +48,6 @@ def call() {
                 steps {
                     // OWASP Dependency Check
                     sh '''
-                        rm -rf /usr/share/dependency-check/data/odc.update.lock
                         appJar=$(find . -type f -path '**/target/**' -name '*SNAPSHOT.jar')
                         $RUN_DEPENDENCY_CHECK --scan $appJar
                     '''
