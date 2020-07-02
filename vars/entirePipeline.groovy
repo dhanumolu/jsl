@@ -41,6 +41,16 @@ def call() {
                     }
                 }
             }
+            stage('OWASP Dependency Check') {
+                steps {
+                    // OWASP Dependency Check
+                    sh '''
+                        appJar=$(find . -type f -path '**/target/**' -name '*SNAPSHOT.jar')
+                        $RUN_DEPENDENCY_CHECK --scan $appJar
+                    '''
+
+                }
+            }
             stage('Docker Image Build') {
                 agent {
                     kubernetes { label 'docker' }
