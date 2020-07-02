@@ -42,6 +42,9 @@ def call() {
                 }
             }
             stage('OWASP Dependency Check') {
+                agent {
+                    kubernetes { label 'owasp' }
+                }
                 steps {
                     // OWASP Dependency Check
                     sh '''
