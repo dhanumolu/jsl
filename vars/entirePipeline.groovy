@@ -69,7 +69,7 @@ def call() {
                         jarName=$(basename $appJar .jar)
                         dockerTag=${jarName#"$appName-"}
                         gitCommitID=$(git log -n 1 --format="%h")
-                        docker build $PWD \
+                        docker build . \
                             -t $appName:$dockerTag \
                             --build-arg APP_JAR=$appJar \
                             --build-arg GIT_COMMIT_ID=$gitCommitID \
