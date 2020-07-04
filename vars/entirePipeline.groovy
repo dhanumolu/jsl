@@ -65,7 +65,7 @@ def call() {
                     // Build Docker Image
                     sh '''
                         appName=$(basename `git config --get remote.origin.url` .git)
-                        appJar=$(find $PWD -type f -path '**/target/**' -name '*SNAPSHOT.jar')
+                        appJar=$(find . -type f -path '**/target/**' -name '*SNAPSHOT.jar')
                         jarName=$(basename $appJar .jar)
                         dockerTag=${jarName#"$appName-"}
                         gitCommitID=$(git log -n 1 --format="%h")
