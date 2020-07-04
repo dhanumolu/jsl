@@ -51,9 +51,9 @@ def call() {
                     // OWASP Dependency Check
                     sh '''
                         $RUN_DEPENDENCY_CHECK \
-                            -s $PWD \
+                            -s . \
                             -f XML \
-                            -o $PWD/**/target/owasp-reports
+                            -o **/target/owasp-reports
                     '''
                 }
             }
