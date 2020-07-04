@@ -13,8 +13,9 @@ def call() {
                         mvn clean verify
                     '''
                     // Publish Reports
-                    junit keepLongStdio: true, \
-                        testResults: '**/target/surefire-reports/*.xml'
+                    junit \
+                        keepLongStdio: true, \
+                        testResults: '$PWD/**/target/surefire-reports/*.xml'
                     jacoco()
                 }
             }
@@ -23,7 +24,8 @@ def call() {
                     // Sonarqube Analysis
                     withSonarQubeEnv('sonarqube') {
                         sh '''
-                            mvn sonar:sonar -Dintegration-tests.skip=true
+                            mvn sonar:sonar \
+                                -Dintegration-tests.skip=true
                         '''
                     }
                     // Quality Gate Check
@@ -48,7 +50,10 @@ def call() {
                 steps {
                     // OWASP Dependency Check
                     sh '''
-                        $RUN_DEPENDENCY_CHECK -s ./ -f XML -o ./**/target/owasp-reports
+                        $RUN_DEPENDENCY_CHECK \
+                            -s $PWD \
+                            -f XML \
+                            -o $PWD/**/target/owasp-reports
                     '''
                 }
             }
@@ -60,11 +65,11 @@ def call() {
                     // Build Docker Image
                     sh '''
                         appName=$(basename `git config --get remote.origin.url` .git)
-                        appJar=$(find . -type f -path '**/target/**' -name '*SNAPSHOT.jar')
+                        appJar=$(find $PWD -type f -path '**/target/**' -name '*SNAPSHOT.jar')
                         jarName=$(basename $appJar .jar)
                         dockerTag=${jarName#"$appName-"}
                         gitCommitID=$(git log -n 1 --format="%h")
-                        docker build . \
+                        docker build $PWD \
                             -t $appName:$dockerTag \
                             --build-arg APP_JAR=$appJar \
                             --build-arg GIT_COMMIT_ID=$gitCommitID \
