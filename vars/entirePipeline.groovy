@@ -15,7 +15,7 @@ def call() {
                     // Publish Reports
                     junit \
                         keepLongStdio: true, \
-                        testResults: '$PWD/**/target/surefire-reports/*.xml'
+                        testResults: '**/target/surefire-reports/*.xml'
                     jacoco()
                 }
             }
