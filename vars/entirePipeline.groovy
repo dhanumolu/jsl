@@ -55,6 +55,7 @@ def call() {
                             -f XML \
                             -o **/target/owasp-reports
                     '''
+                    dependencyCheckPublisher pattern: '**/target/owasp-reports/*.xml'
                 }
             }
             stage('Docker Image Build') {
