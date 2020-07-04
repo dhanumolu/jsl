@@ -48,10 +48,8 @@ def call() {
                 steps {
                     // OWASP Dependency Check
                     sh '''
-                        appJar=$(find . -type f -path '**/target/**' -name '*SNAPSHOT.jar')
-                        $RUN_DEPENDENCY_CHECK --scan $appJar
+                        $RUN_DEPENDENCY_CHECK -s ./ -f XML -o ./**/target/owasp-reports
                     '''
-
                 }
             }
             stage('Docker Image Build') {
