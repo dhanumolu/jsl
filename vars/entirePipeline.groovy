@@ -50,10 +50,11 @@ def call() {
                 steps {
                     // OWASP Dependency Check
                     sh '''
+                        targetDir=$(find . -type d -name 'target')
                         $RUN_DEPENDENCY_CHECK \
                             -s . \
                             -f XML \
-                            -o **/target/owasp-reports
+                            -o $targetDir/owasp-reports
                     '''
                     dependencyCheckPublisher pattern: '**/target/owasp-reports/*.xml'
                 }
