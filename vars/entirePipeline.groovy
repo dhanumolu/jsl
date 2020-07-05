@@ -81,11 +81,5 @@ def call() {
                 }
             }
         }
-        // post {
-        //     always {
-        //         // Delete Workspace
-        //         deleteDir()
-        //     }
-        // }
     }
 }
